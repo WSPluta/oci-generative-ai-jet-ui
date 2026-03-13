@@ -1,0 +1,26 @@
+services:
+  oracle-free:
+    image: container-registry.oracle.com/database/free:latest
+    container_name: agent_loop
+    ports:
+      - "1521:1521"
+      - "5500:5500"
+    environment:
+      ORACLE_PWD: YourPasswordGoesHere  # Change this to a strong password
+    volumes:
+      - oracle-free-data:/opt/oracle/oradata
+    restart: unless-stopped
+    shm_size: 1g  # Required for Oracle DB
+
+  ollama:
+    image: docker.io/ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  oracle-free-data:
+  ollama-data:
